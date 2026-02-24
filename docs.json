@@ -4,9 +4,9 @@
   "name": "DocsOrb",
   "description": "Policy management for HR, LegalOps, and compliance teams",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#009E65",
+    "light": "#00C37C",
+    "dark": "#009E65"
   },
   "favicon": "/help-favicon.png",
   "logo": {
