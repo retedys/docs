@@ -1,0 +1,63 @@
+---
+title: "Policies"
+description: "Create and manage policies"
+---
+
+## Policy lifecycle
+
+States: **Draft** → **In Review** → **Approved** → **Archived**
+
+- **Draft**: Being edited; not visible to employees
+- **In Review**: In approval workflow
+- **Approved**: Live and assignable
+- **Archived**: Retired; kept for audit
+
+{/* Placeholder: Lifecycle diagram or status badges */}
+
+## Create a policy
+
+### From scratch
+
+1. **New Policy** → **Create from scratch**
+2. Fill: name, category, risk level, description, tags
+3. Use AI assist to draft sections (optional)
+4. Edit in rich text editor and save
+
+Supported categories: Security, Privacy, HR, ESG, Other.
+
+{/* Placeholder: Create from scratch screenshot */}
+
+### From template
+
+Use pre-configured board templates with legal-vetted policies. Choose template → customize → publish.
+
+### File upload
+
+- Supported: PDF, DOCX, Markdown, TXT
+- Drag-and-drop or browse (Uppy uploader)
+- OCR for scanned PDFs
+- Attach multiple files to one policy
+
+### From integration
+
+Connect Google Drive, SharePoint, OneDrive, Notion, or Confluence. Select files; DocsOrb imports and optionally auto-syncs on changes.
+
+<Card title="Document sources" icon="file-lines" href="/create/documents">
+  Learn how to attach and manage policy documents.
+</Card>
+
+## Metadata & settings
+
+| Field | Purpose |
+|-------|---------|
+| Name, version, effective date | Identity and validity |
+| Category, risk level | Organisation and prioritisation |
+| Owner, reviewers, contributors | Stakeholders |
+| Audience (groups) | Who sees the policy |
+| Acknowledgment required | Y/N; cadence: once / yearly / monthly / custom |
+
+## Approval workflow
+
+Multi-step approval with configurable approvers per step. Steps: Pending → Approved / Rejected / Skipped. Approvers can revert steps; status is tracked for audit.
+
+{/* Placeholder: Approval workflow screenshot */}

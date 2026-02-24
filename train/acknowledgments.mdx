@@ -1,0 +1,41 @@
+---
+title: "Acknowledgments"
+description: "Sign and track policy acknowledgments"
+---
+
+## When acknowledgment is required
+
+If a policy has `ack_required = true`, employees must sign to acknowledge they've read it. A banner shows the deadline from the active campaign.
+
+{/* Placeholder: Acknowledgment banner screenshot */}
+
+## Signing flow
+
+1. Employee clicks to sign
+2. Signature modal opens
+3. Employee types full name as e-signature
+4. System logs: user, policy id + version, timestamp
+5. Status moves to **Acknowledged**
+
+{/* Placeholder: Signature modal screenshot */}
+
+## Cadence options
+
+| Cadence | When employee signs |
+|---------|---------------------|
+| Once | Sign once; done |
+| Yearly | Annual re-acknowledgment |
+| Monthly | Monthly re-acknowledgment |
+| Custom | Configurable schedule |
+
+## Acknowledgment campaigns
+
+Campaigns manage batches of acknowledgment requests:
+
+- Status: Draft → Active → Completed → Archived
+- Each campaign targets a policy version and audience
+- Individual status: Pending / Acknowledged / Expired
+
+<Card title="Reminders" icon="bell" href="/track/reminders">
+  Auto and manual reminder settings.
+</Card>

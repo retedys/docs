@@ -1,0 +1,25 @@
+---
+title: "Storage integrations"
+description: "Connect Google Drive, SharePoint, and more"
+---
+
+## Supported sources
+
+| Integration | Source type |
+|-------------|-------------|
+| Google Drive | `gdrive` |
+| Microsoft SharePoint | `sharepoint` |
+| Microsoft OneDrive | `onedrive` |
+| Notion | `notion` |
+| Confluence | `confluence` |
+
+## Setup
+
+1. Org Admin connects integration (OAuth or API key)
+2. Storage provider stored in `storage_providers`
+3. When adding a policy document: file picker lists authorised folders/files
+4. On selection: DocsOrb fetches content, stores reference, optionally auto-syncs
+
+## Auto-sync
+
+When enabled, DocsOrb re-imports when source changes and regenerates training artefacts.

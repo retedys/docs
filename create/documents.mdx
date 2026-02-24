@@ -1,0 +1,40 @@
+---
+title: "Policy documents"
+description: "Attach and manage policy source documents"
+---
+
+## Document sources
+
+A policy can have **multiple documents**. Each document has a source type:
+
+| Source | Description |
+|--------|-------------|
+| DocsOrb storage | Created in DocsOrb or uploaded |
+| Google Drive | Linked from GDrive |
+| SharePoint | Linked from SharePoint |
+| OneDrive | Linked from OneDrive |
+| Notion | Linked from Notion |
+| Confluence | Linked from Confluence |
+| URL | Public URL (fetched and ingested) |
+
+## Add documents
+
+### Create in DocsOrb
+
+Rich text editor (Tiptap). Optional AI assist to draft sections. Stored as `docsorb_storage`.
+
+### File upload
+
+PDF, DOCX, Markdown, TXT. OCR for scanned PDFs. Each file = one document.
+
+### Link from integration
+
+Connect storage → pick files → DocsOrb imports. Optional `auto_sync` to re-import when source changes.
+
+### Public URL
+
+Enter a public URL (PDF, HTML). DocsOrb fetches and ingests content.
+
+## Auto-sync
+
+When enabled, DocsOrb re-imports linked documents on change and regenerates training artefacts (overview, key points). Version may bump.

@@ -1,6 +1,6 @@
-# Mintlify Starter Kit
+# DocsOrb Documentation
 
-Use the starter kit to get your docs deployed and ready to customize.
+Policy management docs for HR, LegalOps, FP&A, and employees.
 
 Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
 
