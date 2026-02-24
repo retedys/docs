@@ -78,5 +78,9 @@
   },
   "contextual": {
     "options": ["copy", "view"]
+  },
+  "fonts": {
+    "family": "DM Sans",
+    "weight": 400
   }
 }
