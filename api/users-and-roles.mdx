@@ -1,0 +1,301 @@
+---
+title: "Users and Roles API"
+description: "Manage company-scoped users, invitations, and role presets in the DocsOrb API."
+---
+
+Users are company-scoped in the DocsOrb API. User creation is invitation-based rather than direct account provisioning.
+
+> **Important:** Treat `POST /users/invitations` as the external API path for creating access for a new user.
+
+## List users
+
+`GET /users`
+
+Required scope: `users.read`
+
+Returns company members, including assigned presets and group names.
+
+### Example request
+
+```bash
+curl -X GET "https://<your-docsorb-app-origin>/api/v1/users" \
+  -H "Authorization: Bearer <api_key>"
+```
+
+### Example response
+
+```json
+{
+  "users": [
+    {
+      "id": "member_2f7615c1-ae00-4c0e-b675-6d6a5c9578d3",
+      "email": "sarah.chen@example.com",
+      "display_name": "Sarah Chen",
+      "department": "People Ops",
+      "job_title": "People Operations Lead",
+      "manager_id": null,
+      "status": "active",
+      "avatar_url": null,
+      "presets": ["Org Admin"],
+      "group_names": ["People Ops", "San Francisco"]
+    }
+  ]
+}
+```
+
+## Create a user invitation
+
+`POST /users/invitations`
+
+Required scope: `users.write`
+
+Creates an invitation record and returns the invitation payload and token.
+
+### Request body
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `email` | string | Yes | Invitee email address |
+| `role` | string | Yes | Role identifier |
+| `preset_name` | string | No | Preset name |
+| `expires_at` | string | No | Invitation expiry |
+
+### Example request
+
+```bash
+curl -X POST "https://<your-docsorb-app-origin>/api/v1/users/invitations" \
+  -H "Authorization: Bearer <api_key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "sarah.chen@example.com",
+    "role": "employee",
+    "preset_name": "Employee",
+    "expires_at": "2026-05-01T00:00:00.000Z"
+  }'
+```
+
+### Example response
+
+```json
+{
+  "invitation": {
+    "email": "sarah.chen@example.com",
+    "role": "employee",
+    "preset_name": "Employee",
+    "expires_at": "2026-05-01T00:00:00.000Z"
+  },
+  "token": "invite_token_placeholder"
+}
+```
+
+## Update a user
+
+`PATCH /users/{orgMemberId}`
+
+Required scope: `users.write`
+
+Supports partial updates.
+
+### Allowed fields
+
+| Field |
+|-------|
+| `display_name` |
+| `department` |
+| `job_title` |
+| `manager_id` |
+| `status` |
+| `avatar_url` |
+| `preset_ids` |
+
+`preset_ids` replaces the full preset assignment array.
+
+### Example request
+
+```bash
+curl -X PATCH "https://<your-docsorb-app-origin>/api/v1/users/member_2f7615c1-ae00-4c0e-b675-6d6a5c9578d3" \
+  -H "Authorization: Bearer <api_key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "job_title": "Senior People Operations Lead",
+    "preset_ids": ["preset_1", "preset_2"]
+  }'
+```
+
+### Example response
+
+```json
+{
+  "user": {
+    "id": "member_2f7615c1-ae00-4c0e-b675-6d6a5c9578d3",
+    "job_title": "Senior People Operations Lead",
+    "preset_ids": ["preset_1", "preset_2"]
+  }
+}
+```
+
+## Delete a user
+
+`DELETE /users/{orgMemberId}`
+
+Required scope: `users.write`
+
+Removes the org member and dependent business records.
+
+### Example request
+
+```bash
+curl -X DELETE "https://<your-docsorb-app-origin>/api/v1/users/member_2f7615c1-ae00-4c0e-b675-6d6a5c9578d3" \
+  -H "Authorization: Bearer <api_key>"
+```
+
+### Example response
+
+```json
+{
+  "success": true
+}
+```
+
+## List roles
+
+`GET /roles`
+
+Required scope: `users.read`
+
+Returns role presets and permission definitions.
+
+### Example request
+
+```bash
+curl -X GET "https://<your-docsorb-app-origin>/api/v1/roles" \
+  -H "Authorization: Bearer <api_key>"
+```
+
+### Example response
+
+```json
+{
+  "roles": [
+    {
+      "id": "preset_1",
+      "name": "Compliance Manager",
+      "description": "Manages compliance workflows",
+      "permission_ids": ["perm_1", "perm_2"]
+    }
+  ],
+  "permissions": [
+    {
+      "id": "perm_1"
+    },
+    {
+      "id": "perm_2"
+    }
+  ]
+}
+```
+
+## Create a role
+
+`POST /roles`
+
+Required scope: `users.write`
+
+Creates a custom role preset.
+
+### Request body
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `name` | string | Yes | Preset name |
+| `description` | string | No | Preset description |
+| `permission_ids` | string[] | No | Full permission array |
+
+### Example request
+
+```bash
+curl -X POST "https://<your-docsorb-app-origin>/api/v1/roles" \
+  -H "Authorization: Bearer <api_key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Compliance Manager",
+    "description": "Manages compliance workflows",
+    "permission_ids": ["perm_1", "perm_2"]
+  }'
+```
+
+### Example response
+
+```json
+{
+  "role": {
+    "id": "preset_1",
+    "name": "Compliance Manager",
+    "description": "Manages compliance workflows",
+    "permission_ids": ["perm_1", "perm_2"]
+  }
+}
+```
+
+## Update a role
+
+`PATCH /roles/{presetId}`
+
+Required scope: `users.write`
+
+Supports partial updates. `permission_ids` replaces the full permission set.
+
+### Allowed fields
+
+| Field |
+|-------|
+| `name` |
+| `description` |
+| `permission_ids` |
+
+### Example request
+
+```bash
+curl -X PATCH "https://<your-docsorb-app-origin>/api/v1/roles/preset_1" \
+  -H "Authorization: Bearer <api_key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "description": "Manages compliance workflows and policy operations",
+    "permission_ids": ["perm_1", "perm_2", "perm_3"]
+  }'
+```
+
+### Example response
+
+```json
+{
+  "role": {
+    "id": "preset_1",
+    "description": "Manages compliance workflows and policy operations",
+    "permission_ids": ["perm_1", "perm_2", "perm_3"]
+  }
+}
+```
+
+## Delete a role
+
+`DELETE /roles/{presetId}`
+
+Required scope: `users.write`
+
+Deletes a custom non-system role preset.
+
+### Example request
+
+```bash
+curl -X DELETE "https://<your-docsorb-app-origin>/api/v1/roles/preset_1" \
+  -H "Authorization: Bearer <api_key>"
+```
+
+### Example response
+
+```json
+{
+  "success": true
+}
+```

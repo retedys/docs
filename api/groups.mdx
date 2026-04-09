@@ -1,0 +1,191 @@
+---
+title: "Groups API"
+description: "Manage company-scoped groups and memberships in the DocsOrb API."
+---
+
+Groups are company-scoped collections used for audience targeting and operational workflows. Group deletion removes the group and its memberships.
+
+## List groups
+
+`GET /groups`
+
+Required scope: `groups.read`
+
+Returns groups for the calling company, including `member_count`.
+
+### Example request
+
+```bash
+curl -X GET "https://<your-docsorb-app-origin>/api/v1/groups" \
+  -H "Authorization: Bearer <api_key>"
+```
+
+### Example response
+
+```json
+{
+  "groups": [
+    {
+      "id": "group_59c93452-4e60-4113-bd03-f2bce9e82542",
+      "name": "People Ops",
+      "description": "People Operations team",
+      "type": "department",
+      "member_count": 12
+    }
+  ]
+}
+```
+
+## Create a group
+
+`POST /groups`
+
+Required scope: `groups.write`
+
+### Request body
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `name` | string | Yes | Group name |
+| `description` | string | No | Group description |
+| `type` | string | No | `department`, `team`, `location`, or `custom` |
+| `member_ids` | string[] | No | Full initial membership array |
+
+### Example request
+
+```bash
+curl -X POST "https://<your-docsorb-app-origin>/api/v1/groups" \
+  -H "Authorization: Bearer <api_key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "People Ops",
+    "description": "People Operations team",
+    "type": "department",
+    "member_ids": [
+      "member_2f7615c1-ae00-4c0e-b675-6d6a5c9578d3"
+    ]
+  }'
+```
+
+### Example response
+
+```json
+{
+  "group": {
+    "id": "group_59c93452-4e60-4113-bd03-f2bce9e82542",
+    "name": "People Ops",
+    "description": "People Operations team",
+    "type": "department",
+    "member_ids": [
+      "member_2f7615c1-ae00-4c0e-b675-6d6a5c9578d3"
+    ]
+  }
+}
+```
+
+## Get a group
+
+`GET /groups/{groupId}`
+
+Required scope: `groups.read`
+
+Returns the group plus `member_ids`.
+
+### Path parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `groupId` | string | Yes | Group ID |
+
+### Example request
+
+```bash
+curl -X GET "https://<your-docsorb-app-origin>/api/v1/groups/group_59c93452-4e60-4113-bd03-f2bce9e82542" \
+  -H "Authorization: Bearer <api_key>"
+```
+
+### Example response
+
+```json
+{
+  "group": {
+    "id": "group_59c93452-4e60-4113-bd03-f2bce9e82542",
+    "name": "People Ops",
+    "description": "People Operations team",
+    "type": "department",
+    "member_ids": [
+      "member_2f7615c1-ae00-4c0e-b675-6d6a5c9578d3"
+    ]
+  }
+}
+```
+
+## Update a group
+
+`PATCH /groups/{groupId}`
+
+Required scope: `groups.write`
+
+Supports partial updates. `member_ids` replaces the full membership array.
+
+### Allowed fields
+
+| Field |
+|-------|
+| `name` |
+| `description` |
+| `type` |
+| `member_ids` |
+
+### Example request
+
+```bash
+curl -X PATCH "https://<your-docsorb-app-origin>/api/v1/groups/group_59c93452-4e60-4113-bd03-f2bce9e82542" \
+  -H "Authorization: Bearer <api_key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "description": "People Operations and compliance team",
+    "member_ids": [
+      "member_2f7615c1-ae00-4c0e-b675-6d6a5c9578d3",
+      "member_7965f8d0-0da5-49ee-bdd7-ecfdb910b980"
+    ]
+  }'
+```
+
+### Example response
+
+```json
+{
+  "group": {
+    "id": "group_59c93452-4e60-4113-bd03-f2bce9e82542",
+    "description": "People Operations and compliance team",
+    "member_ids": [
+      "member_2f7615c1-ae00-4c0e-b675-6d6a5c9578d3",
+      "member_7965f8d0-0da5-49ee-bdd7-ecfdb910b980"
+    ]
+  }
+}
+```
+
+## Delete a group
+
+`DELETE /groups/{groupId}`
+
+Required scope: `groups.write`
+
+Deletes the group and its memberships.
+
+### Example request
+
+```bash
+curl -X DELETE "https://<your-docsorb-app-origin>/api/v1/groups/group_59c93452-4e60-4113-bd03-f2bce9e82542" \
+  -H "Authorization: Bearer <api_key>"
+```
+
+### Example response
+
+```json
+{
+  "success": true
+}
+```

@@ -1,0 +1,269 @@
+---
+title: "Acknowledgments API"
+description: "Manage company-scoped acknowledgment campaigns and records in the DocsOrb API."
+---
+
+DocsOrb models acknowledgments as company-scoped campaigns. Campaign deletion is archival behavior rather than hard delete behavior.
+
+## List acknowledgment campaigns
+
+`GET /acknowledgments`
+
+Required scope: `acknowledgments.read`
+
+Returns acknowledgment campaigns for the calling company, including summary counts.
+
+### Example request
+
+```bash
+curl -X GET "https://<your-docsorb-app-origin>/api/v1/acknowledgments" \
+  -H "Authorization: Bearer <api_key>"
+```
+
+### Example response
+
+```json
+{
+  "campaigns": [
+    {
+      "id": "campaign_30fc1ef3-1f75-4731-8720-7957a52be484",
+      "name": "Annual Security Acknowledgment",
+      "description": "Annual sign-off for security and privacy policies",
+      "frequency": "recurring",
+      "recurrence_config": {},
+      "grace_period_days": 7,
+      "status": "active",
+      "start_date": "2026-05-01T00:00:00.000Z",
+      "board_count": 2,
+      "audience_count": 3,
+      "ack_count": 148
+    }
+  ]
+}
+```
+
+## Create an acknowledgment campaign
+
+`POST /acknowledgments`
+
+Required scope: `acknowledgments.write`
+
+### Request body
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `name` | string | Yes | Campaign name |
+| `description` | string | No | Campaign description |
+| `frequency` | string | Yes | `one_time`, `per_version`, or `recurring` |
+| `recurrence_config` | JSON | No | Recurrence rules |
+| `grace_period_days` | number | No | Grace period length |
+| `status` | string | No | Campaign status |
+| `start_date` | string | No | Start date/time |
+| `board_ids` | string[] | Yes | Board IDs included in the campaign |
+| `audience` | array | Yes | Array of `{ target_type, target_id }` |
+
+Returns `201 Created`.
+
+### Example request
+
+```bash
+curl -X POST "https://<your-docsorb-app-origin>/api/v1/acknowledgments" \
+  -H "Authorization: Bearer <api_key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Annual Security Acknowledgment",
+    "description": "Annual sign-off for security and privacy policies",
+    "frequency": "recurring",
+    "recurrence_config": {},
+    "grace_period_days": 7,
+    "status": "active",
+    "start_date": "2026-05-01T00:00:00.000Z",
+    "board_ids": [
+      "board_8a58d7aa-9807-4ad7-a403-e3ef4e2ce4fb"
+    ],
+    "audience": [
+      {
+        "target_type": "group",
+        "target_id": "group_59c93452-4e60-4113-bd03-f2bce9e82542"
+      }
+    ]
+  }'
+```
+
+### Example response
+
+```json
+{
+  "campaign": {
+    "id": "campaign_30fc1ef3-1f75-4731-8720-7957a52be484",
+    "name": "Annual Security Acknowledgment",
+    "description": "Annual sign-off for security and privacy policies",
+    "frequency": "recurring",
+    "recurrence_config": {},
+    "grace_period_days": 7,
+    "status": "active",
+    "start_date": "2026-05-01T00:00:00.000Z",
+    "board_ids": [
+      "board_8a58d7aa-9807-4ad7-a403-e3ef4e2ce4fb"
+    ],
+    "audience": [
+      {
+        "target_type": "group",
+        "target_id": "group_59c93452-4e60-4113-bd03-f2bce9e82542"
+      }
+    ]
+  }
+}
+```
+
+## Get an acknowledgment campaign
+
+`GET /acknowledgments/{campaignId}`
+
+Required scope: `acknowledgments.read`
+
+### Path parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `campaignId` | string | Yes | Campaign ID |
+
+### Query parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `period` | string | No | Reporting period filter |
+
+### Example request
+
+```bash
+curl -X GET "https://<your-docsorb-app-origin>/api/v1/acknowledgments/campaign_30fc1ef3-1f75-4731-8720-7957a52be484?period=2026-Q2" \
+  -H "Authorization: Bearer <api_key>"
+```
+
+### Example response
+
+```json
+{
+  "campaign": {
+    "id": "campaign_30fc1ef3-1f75-4731-8720-7957a52be484",
+    "name": "Annual Security Acknowledgment",
+    "frequency": "recurring",
+    "status": "active"
+  },
+  "boards": [
+    "board_8a58d7aa-9807-4ad7-a403-e3ef4e2ce4fb"
+  ],
+  "audience": [
+    {
+      "target_type": "group",
+      "target_id": "group_59c93452-4e60-4113-bd03-f2bce9e82542"
+    }
+  ],
+  "records": [],
+  "pagination": {}
+}
+```
+
+## Update an acknowledgment campaign
+
+`PATCH /acknowledgments/{campaignId}`
+
+Required scope: `acknowledgments.write`
+
+Supports partial updates.
+
+### Allowed fields
+
+| Field |
+|-------|
+| `name` |
+| `description` |
+| `frequency` |
+| `recurrence_config` |
+| `grace_period_days` |
+| `status` |
+| `start_date` |
+| `board_ids` |
+| `audience` |
+
+### Example request
+
+```bash
+curl -X PATCH "https://<your-docsorb-app-origin>/api/v1/acknowledgments/campaign_30fc1ef3-1f75-4731-8720-7957a52be484" \
+  -H "Authorization: Bearer <api_key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "grace_period_days": 10,
+    "status": "paused"
+  }'
+```
+
+### Example response
+
+```json
+{
+  "campaign": {
+    "id": "campaign_30fc1ef3-1f75-4731-8720-7957a52be484",
+    "grace_period_days": 10,
+    "status": "paused"
+  }
+}
+```
+
+## Delete an acknowledgment campaign
+
+`DELETE /acknowledgments/{campaignId}`
+
+Required scope: `acknowledgments.write`
+
+Archives the campaign instead of hard-deleting it.
+
+### Example request
+
+```bash
+curl -X DELETE "https://<your-docsorb-app-origin>/api/v1/acknowledgments/campaign_30fc1ef3-1f75-4731-8720-7957a52be484" \
+  -H "Authorization: Bearer <api_key>"
+```
+
+### Example response
+
+```json
+{
+  "success": true
+}
+```
+
+## List acknowledgment records
+
+`GET /acknowledgments/{campaignId}/records`
+
+Required scope: `acknowledgments.read`
+
+Returns paginated acknowledgment records plus pagination metadata.
+
+### Query parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `page` | number | No | Page number |
+| `per_page` | number | No | Records per page |
+| `policy_id` | string | No | Filter by policy ID |
+| `user_id` | string | No | Filter by user ID |
+| `period` | string | No | Reporting period filter |
+
+### Example request
+
+```bash
+curl -X GET "https://<your-docsorb-app-origin>/api/v1/acknowledgments/campaign_30fc1ef3-1f75-4731-8720-7957a52be484/records?page=1&per_page=50" \
+  -H "Authorization: Bearer <api_key>"
+```
+
+### Example response
+
+```json
+{
+  "records": [],
+  "pagination": {}
+}
+```

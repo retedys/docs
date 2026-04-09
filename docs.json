@@ -81,7 +81,12 @@
               "api/authentication",
               "api/rate-limits-and-errors",
               "api/tasks",
-              "api/scopes"
+              "api/scopes",
+              "api/policy-boards",
+              "api/policies",
+              "api/acknowledgments",
+              "api/users-and-roles",
+              "api/groups"
             ]
           }
         ]

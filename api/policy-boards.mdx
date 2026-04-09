@@ -1,0 +1,198 @@
+---
+title: "Policy Boards API"
+description: "Create, read, update, and soft-delete policy boards through the DocsOrb API."
+---
+
+Policy boards are company-scoped collections used to organize policies and training workflows. All endpoints below operate only within the calling company's DocsOrb workspace.
+
+> **Note:** `boardId` values shown below are placeholder UUIDs.
+
+## List policy boards
+
+`GET /policy-boards`
+
+Required scope: `policy_boards.read`
+
+Returns only non-deleted policy boards for the calling company.
+
+### Example request
+
+```bash
+curl -X GET "https://<your-docsorb-app-origin>/api/v1/policy-boards" \
+  -H "Authorization: Bearer <api_key>"
+```
+
+### Example response
+
+```json
+{
+  "boards": [
+    {
+      "id": "board_8a58d7aa-9807-4ad7-a403-e3ef4e2ce4fb",
+      "name": "Employee Onboarding",
+      "description": "Core onboarding policies for new hires",
+      "primary_color": "#009E65",
+      "logo_url": "https://assets.example.com/docsorb/onboarding-logo.png",
+      "cover_image_url": "https://assets.example.com/docsorb/onboarding-cover.png",
+      "status": "published"
+    }
+  ]
+}
+```
+
+## Create a policy board
+
+`POST /policy-boards`
+
+Required scope: `policy_boards.write`
+
+### Request body
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `name` | string | Yes | Board name |
+| `description` | string | No | Board description |
+| `primary_color` | string | No | Primary brand color |
+| `logo_url` | string | No | Logo asset URL |
+| `cover_image_url` | string | No | Cover image URL |
+| `status` | string | No | Board status |
+
+Returns `201 Created`.
+
+### Example request
+
+```bash
+curl -X POST "https://<your-docsorb-app-origin>/api/v1/policy-boards" \
+  -H "Authorization: Bearer <api_key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Employee Onboarding",
+    "description": "Core onboarding policies for new hires",
+    "primary_color": "#009E65",
+    "status": "draft"
+  }'
+```
+
+### Example response
+
+```json
+{
+  "board": {
+    "id": "board_8a58d7aa-9807-4ad7-a403-e3ef4e2ce4fb",
+    "name": "Employee Onboarding",
+    "description": "Core onboarding policies for new hires",
+    "primary_color": "#009E65",
+    "logo_url": null,
+    "cover_image_url": null,
+    "status": "draft"
+  }
+}
+```
+
+## Get a single policy board
+
+`GET /policy-boards/{boardId}`
+
+Required scope: `policy_boards.read`
+
+Returns a single board for the calling company, including `policy_count`.
+
+### Path parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `boardId` | string | Yes | Policy board ID |
+
+### Example request
+
+```bash
+curl -X GET "https://<your-docsorb-app-origin>/api/v1/policy-boards/board_8a58d7aa-9807-4ad7-a403-e3ef4e2ce4fb" \
+  -H "Authorization: Bearer <api_key>"
+```
+
+### Example response
+
+```json
+{
+  "board": {
+    "id": "board_8a58d7aa-9807-4ad7-a403-e3ef4e2ce4fb",
+    "name": "Employee Onboarding",
+    "description": "Core onboarding policies for new hires",
+    "primary_color": "#009E65",
+    "logo_url": null,
+    "cover_image_url": null,
+    "status": "published",
+    "policy_count": 12
+  }
+}
+```
+
+## Update a policy board
+
+`PATCH /policy-boards/{boardId}`
+
+Required scope: `policy_boards.write`
+
+Supports partial updates.
+
+### Allowed fields
+
+| Field |
+|-------|
+| `name` |
+| `description` |
+| `primary_color` |
+| `logo_url` |
+| `cover_image_url` |
+| `status` |
+
+### Example request
+
+```bash
+curl -X PATCH "https://<your-docsorb-app-origin>/api/v1/policy-boards/board_8a58d7aa-9807-4ad7-a403-e3ef4e2ce4fb" \
+  -H "Authorization: Bearer <api_key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "description": "Core onboarding and compliance policies",
+    "status": "published"
+  }'
+```
+
+### Example response
+
+```json
+{
+  "board": {
+    "id": "board_8a58d7aa-9807-4ad7-a403-e3ef4e2ce4fb",
+    "name": "Employee Onboarding",
+    "description": "Core onboarding and compliance policies",
+    "primary_color": "#009E65",
+    "logo_url": null,
+    "cover_image_url": null,
+    "status": "published"
+  }
+}
+```
+
+## Delete a policy board
+
+`DELETE /policy-boards/{boardId}`
+
+Required scope: `policy_boards.write`
+
+Soft-deletes the board and returns a success payload.
+
+### Example request
+
+```bash
+curl -X DELETE "https://<your-docsorb-app-origin>/api/v1/policy-boards/board_8a58d7aa-9807-4ad7-a403-e3ef4e2ce4fb" \
+  -H "Authorization: Bearer <api_key>"
+```
+
+### Example response
+
+```json
+{
+  "success": true
+}
+```
