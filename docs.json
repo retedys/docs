@@ -25,10 +25,14 @@
     "tabs": [
       {
         "tab": "Guides",
+        "icon": "file-lines",
         "groups": [
           {
             "group": "Getting started",
-            "pages": ["index", "quickstart"]
+            "pages": [
+              "index",
+              "quickstart"
+            ]
           },
           {
             "group": "Create",
@@ -73,6 +77,8 @@
       },
       {
         "tab": "API",
+        "icon": "code",
+        "hidden": true,
         "groups": [
           {
             "group": "DocsOrb API",
@@ -91,10 +97,7 @@
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": []
-    }
+    ]
   },
   "contextual": {
     "options": ["copy", "view"]
