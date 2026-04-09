@@ -1,0 +1,77 @@
+---
+title: "API Overview"
+description: "Build integrations and automations with the DocsOrb external API."
+---
+
+The DocsOrb API is the external API for company-level integrations and automations. It is separate from DocsOrb's internal session-auth routes and is designed for technical teams building against your DocsOrb workspace.
+
+## Base URL
+
+Use the base URL below and replace the host with your DocsOrb app origin:
+
+```txt
+https://<your-docsorb-app-origin>/api/v1
+```
+
+## What is live today
+
+Only the Tasks API is currently live on the public `/api/v1` surface.
+
+| Resource family | Status |
+|-----------------|--------|
+| Tasks | Live |
+| Policy boards | Coming soon |
+| Policies | Coming soon |
+| Policy version publishing | Coming soon |
+| Acknowledgments | Coming soon |
+| Users | Coming soon |
+| Groups | Coming soon |
+
+> **Important:** Do not assume support for OAuth, webhooks, pagination, or idempotency keys. Those behaviors are not documented because they are not currently implemented.
+
+## API keys
+
+DocsOrb uses company-scoped API keys for external API access.
+
+| Detail | Behavior |
+|--------|----------|
+| Where keys are created | `Settings -> API Keys` in the DocsOrb app |
+| Visibility | Keys are shown only once at creation time |
+| Expiry | If left blank, the key has no expiry |
+| Revocation | Keys can be revoked or deleted in the settings UI |
+| Scope | Keys are company-scoped service account keys |
+| Logging | Successful and failed external API requests are logged for analytics |
+
+## Request and response headers
+
+### Request headers
+
+| Header | When required |
+|--------|---------------|
+| `Authorization: Bearer <api_key>` | Every request |
+| `Content-Type: application/json` | Write operations |
+
+### Response headers
+
+| Header | Description |
+|--------|-------------|
+| `x-request-id` | Unique request identifier returned on successful and failed external API requests |
+| `x-ratelimit-limit` | Current rate-limit ceiling for the active window |
+| `x-ratelimit-remaining` | Remaining requests in the active window |
+| `x-ratelimit-reset` | Window reset timestamp |
+| `retry-after` | Seconds to wait before retrying after a `429` response |
+
+Use `x-request-id` when contacting DocsOrb support.
+
+## Quick example
+
+```bash
+curl -X GET "https://<your-docsorb-app-origin>/api/v1/tasks" \
+  -H "Authorization: Bearer <api_key>"
+```
+
+## Next steps
+
+- See `/api/authentication` for auth and key behavior.
+- See `/api/tasks` for the live endpoint reference.
+- See `/api/scopes` for current and reserved scopes.

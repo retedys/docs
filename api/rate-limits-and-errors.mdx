@@ -1,0 +1,87 @@
+---
+title: "Rate Limits and Errors"
+description: "Understand default rate limits, response headers, and common error shapes."
+---
+
+DocsOrb enforces rate limiting across the external `/api/v1` surface at the company level.
+
+## Default rate limits
+
+| Window | Default limit |
+|--------|---------------|
+| Per minute | `300` requests per company |
+| Per hour | `5,000` requests per company |
+| Per day | `25,000` requests per company |
+
+> **Note:** The current defaults apply at the company level across the full external API surface. The schema supports per-key overrides in the future, but that behavior should not be assumed today.
+
+## Rate-limit responses
+
+When a request exceeds a limit, DocsOrb returns `429 Too Many Requests`.
+
+### Response headers
+
+| Header | Description |
+|--------|-------------|
+| `x-ratelimit-limit` | Limit for the current window |
+| `x-ratelimit-remaining` | Remaining requests in the current window |
+| `x-ratelimit-reset` | Window reset timestamp |
+| `retry-after` | Seconds to wait before retrying |
+
+### Example `429 Too Many Requests`
+
+```json
+{
+  "status": 429,
+  "message": "Rate limit exceeded",
+  "data": {
+    "requestId": "req_123",
+    "errorCode": "rate_limit_exceeded",
+    "retryAfterSeconds": 18
+  }
+}
+```
+
+## Error model
+
+DocsOrb uses standard HTTP status codes. Error responses include a top-level `status` and `message`. Some responses also include a `data` object with machine-readable details.
+
+For auth and rate-limit errors, the response may include these fields:
+
+| Field | Description |
+|-------|-------------|
+| `requestId` | Request identifier for support and debugging |
+| `errorCode` | Machine-readable error code |
+| `requiredScope` | Missing scope for authorization failures |
+| `retryAfterSeconds` | Suggested retry delay for throttled requests |
+
+## Common status codes
+
+| Status | Meaning |
+|--------|---------|
+| `200 OK` | Request succeeded |
+| `201 Created` | Resource created successfully |
+| `400 Bad Request` | Request body or parameters were invalid |
+| `401 Unauthorized` | Missing, invalid, or expired API key |
+| `403 Forbidden` | API key is valid but lacks the required scope |
+| `404 Not Found` | Resource was not found |
+| `429 Too Many Requests` | Rate limit exceeded |
+| `500 Internal Server Error` | Unexpected server-side failure |
+
+### Example `400 Bad Request`
+
+```json
+{
+  "status": 400,
+  "message": "No valid update fields were provided"
+}
+```
+
+### Example `500 Internal Server Error`
+
+```json
+{
+  "status": 500,
+  "message": "Internal server error"
+}
+```

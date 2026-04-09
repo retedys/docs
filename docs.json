@@ -70,6 +70,21 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "API",
+        "groups": [
+          {
+            "group": "DocsOrb API",
+            "pages": [
+              "api/overview",
+              "api/authentication",
+              "api/rate-limits-and-errors",
+              "api/tasks",
+              "api/scopes"
+            ]
+          }
+        ]
       }
     ],
     "global": {

@@ -1,0 +1,78 @@
+---
+title: "Authentication"
+description: "Authenticate external API requests with a company-scoped API key."
+---
+
+The DocsOrb API authenticates requests with a company-scoped API key created in the DocsOrb app under `Settings -> API Keys`.
+
+## Authenticate requests
+
+Send your API key in the `Authorization` header:
+
+```http
+Authorization: Bearer <api_key>
+```
+
+```bash
+curl -X GET "https://<your-docsorb-app-origin>/api/v1/tasks" \
+  -H "Authorization: Bearer <api_key>"
+```
+
+## Key behavior
+
+| Behavior | Details |
+|----------|---------|
+| Key type | Company-scoped service account key |
+| Creation location | `Settings -> API Keys` |
+| One-time visibility | The key value is shown only once at creation time |
+| Expiry | Leaving expiry blank creates a key with no expiry |
+| Rotation | Revoke or delete keys from the settings UI |
+
+> **Important:** Store API keys securely. If you lose the key value after creation, create a new key and revoke the old one.
+
+## Auth failures
+
+Requests without a valid key return `401 Unauthorized`. Expired keys also return `401`. Missing scopes return `403 Forbidden`.
+
+### Machine-readable auth error codes
+
+| Error code | Meaning |
+|------------|---------|
+| `missing_api_key` | The request did not include an API key |
+| `invalid_api_key` | The provided API key was not recognized |
+| `expired_api_key` | The API key exists but is expired |
+| `missing_scope` | The API key does not include the required scope |
+| `scope_lookup_failed` | DocsOrb could not resolve the required scope for the request |
+
+### Example `401 Unauthorized`
+
+```json
+{
+  "status": 401,
+  "message": "Missing or invalid API key",
+  "data": {
+    "requestId": "req_123",
+    "errorCode": "missing_api_key"
+  }
+}
+```
+
+### Example `403 Forbidden`
+
+```json
+{
+  "status": 403,
+  "message": "Missing required scope",
+  "data": {
+    "requestId": "req_123",
+    "errorCode": "missing_scope",
+    "requiredScope": "tasks.write"
+  }
+}
+```
+
+## Request tracing
+
+Every successful or failed external API request includes an `x-request-id` response header.
+
+Use that request ID when contacting DocsOrb support so the request can be traced quickly.

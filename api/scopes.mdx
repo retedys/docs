@@ -1,0 +1,62 @@
+---
+title: "Scopes"
+description: "Understand live and reserved scopes for company-scoped API keys."
+---
+
+DocsOrb API keys are company-scoped and scope-based. Assign only the scopes your integration needs.
+
+## Live scopes
+
+These scopes are live today for the public external API:
+
+| Scope | Status | Used for |
+|-------|--------|----------|
+| `tasks.read` | Live | Read task data |
+| `tasks.write` | Live | Create and update tasks |
+| `tasks.delete` | Live | Delete tasks |
+
+## Reserved scopes
+
+These scopes are defined for upcoming APIs but should be treated as reserved only. They do not imply that matching external endpoints are available today.
+
+| Scope | Status |
+|-------|--------|
+| `policy_boards.read` | Reserved |
+| `policy_boards.write` | Reserved |
+| `policies.read` | Reserved |
+| `policies.write` | Reserved |
+| `policies.publish` | Reserved |
+| `acknowledgments.read` | Reserved |
+| `acknowledgments.write` | Reserved |
+| `users.read` | Reserved |
+| `users.write` | Reserved |
+| `groups.read` | Reserved |
+| `groups.write` | Reserved |
+
+> **Note:** Only the Tasks API is currently live in the public `/api/v1` surface. Policy boards, policies, acknowledgments, users, and groups should be documented as planned, not available.
+
+## API key presets
+
+During API key creation, DocsOrb provides these presets:
+
+| Preset | Behavior |
+|--------|----------|
+| `Read-only` | Preselects all `.read` scopes |
+| `Read-write` | Preselects all `.read` and `.write` scopes |
+| `Full access` | Preselects every available scope, including delete and publish actions |
+
+## Scope errors
+
+If a request is authenticated but the key lacks the required scope, DocsOrb returns `403 Forbidden`.
+
+```json
+{
+  "status": 403,
+  "message": "Missing required scope",
+  "data": {
+    "requestId": "req_123",
+    "errorCode": "missing_scope",
+    "requiredScope": "tasks.delete"
+  }
+}
+```

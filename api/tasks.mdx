@@ -1,0 +1,294 @@
+---
+title: "Tasks API"
+description: "Reference for the live public Tasks endpoints in the DocsOrb API."
+---
+
+The Tasks API is the currently supported public API surface in DocsOrb.
+
+## Task object
+
+| Field | Type | Notes |
+|-------|------|-------|
+| `id` | string | Task ID |
+| `company_id` | string | Company ID |
+| `title` | string | Task title |
+| `description` | string or null | Task description |
+| `type` | string | Example: `manual`, `policy_review` |
+| `status` | string | Example: `pending`, `completed` |
+| `priority` | string | Example: `low`, `medium`, `high` |
+| `assigned_to` | string or null | Auth user ID |
+| `assigned_by` | string or null | Assigner ID when available |
+| `assignee_id` | string or null | DocsOrb org member ID |
+| `section_id` | string or null | Related section ID |
+| `reference_type` | string or null | External reference type |
+| `reference_id` | string or null | External reference ID |
+| `due_date` | string or null | ISO datetime |
+| `completed_at` | string or null | ISO datetime |
+| `created_at` | string | ISO datetime |
+| `updated_at` | string | ISO datetime |
+| `linked_policy_id` | string or null | Linked policy ID |
+| `linked_policy_name` | string or null | Linked policy name |
+| `linked_template_id` | string or null | Linked template ID |
+| `linked_template_name` | string or null | Linked template name |
+| `linked_template_type` | string or null | Linked template type |
+
+## List tasks
+
+`GET /tasks`
+
+Required scope: `tasks.read`
+
+Returns tasks for the calling company, ordered newest first by `created_at`.
+
+### Query parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `status` | string | No | Filter by task status |
+| `section_id` | string | No | Filter by section ID |
+| `assigned_to` | string | No | Filter by auth user ID |
+
+### Example request
+
+```bash
+curl -X GET "https://<your-docsorb-app-origin>/api/v1/tasks?status=pending" \
+  -H "Authorization: Bearer <api_key>"
+```
+
+### Example response
+
+```json
+{
+  "tasks": [
+    {
+      "id": "uuid",
+      "company_id": "uuid",
+      "title": "Review handbook update",
+      "description": "Follow up with legal",
+      "type": "manual",
+      "status": "pending",
+      "priority": "medium",
+      "assigned_to": "auth-user-uuid",
+      "assigned_by": null,
+      "assignee_id": "org-member-uuid",
+      "section_id": null,
+      "reference_type": null,
+      "reference_id": null,
+      "due_date": "2026-04-20T00:00:00.000Z",
+      "completed_at": null,
+      "created_at": "2026-04-09T10:00:00.000Z",
+      "updated_at": "2026-04-09T10:00:00.000Z",
+      "linked_policy_id": null,
+      "linked_policy_name": null,
+      "linked_template_id": null,
+      "linked_template_name": null,
+      "linked_template_type": null
+    }
+  ]
+}
+```
+
+## Get a single task
+
+`GET /tasks/{taskId}`
+
+Required scope: `tasks.read`
+
+Returns a single task by ID. Returns `404` if the task is not found.
+
+### Path parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `taskId` | string | Yes | Task ID |
+
+### Example request
+
+```bash
+curl -X GET "https://<your-docsorb-app-origin>/api/v1/tasks/task_uuid" \
+  -H "Authorization: Bearer <api_key>"
+```
+
+### Example response
+
+```json
+{
+  "task": {
+    "id": "uuid",
+    "company_id": "uuid",
+    "title": "Review handbook update",
+    "description": "Follow up with legal",
+    "type": "manual",
+    "status": "pending",
+    "priority": "medium",
+    "assigned_to": "auth-user-uuid",
+    "assigned_by": null,
+    "assignee_id": "org-member-uuid",
+    "section_id": null,
+    "reference_type": null,
+    "reference_id": null,
+    "due_date": null,
+    "completed_at": null,
+    "created_at": "2026-04-09T10:00:00.000Z",
+    "updated_at": "2026-04-09T10:00:00.000Z",
+    "linked_policy_id": null,
+    "linked_policy_name": null,
+    "linked_template_id": null,
+    "linked_template_name": null,
+    "linked_template_type": null
+  }
+}
+```
+
+## Create a task
+
+`POST /tasks`
+
+Required scope: `tasks.write`
+
+### Request body
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `title` | string | Yes | Task title |
+| `description` | string | No | Task description |
+| `type` | string | No | Defaults to `manual` |
+| `status` | string | No | Defaults to `pending` |
+| `priority` | string | No | Defaults to `medium` |
+| `assigned_to` | string | No | Auth user ID |
+| `assignee_id` | string | No | DocsOrb org member ID |
+| `section_id` | string | No | Related section ID |
+| `reference_type` | string | No | External reference type |
+| `reference_id` | string | No | External reference ID |
+| `due_date` | string | No | ISO datetime |
+
+> **Important:** External API task creation requires an explicit assignee. Provide either `assigned_to` or `assignee_id`.
+>
+> If both are provided, `assignee_id` takes precedence. `assignee_id` must be an active DocsOrb org member ID for the company. `assigned_to` should be an auth user ID.
+
+Returns `201 Created`.
+
+### Example request
+
+```bash
+curl -X POST "https://<your-docsorb-app-origin>/api/v1/tasks" \
+  -H "Authorization: Bearer <api_key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Review handbook update",
+    "description": "Follow up with legal",
+    "priority": "high",
+    "assignee_id": "org-member-uuid",
+    "due_date": "2026-04-20T00:00:00.000Z"
+  }'
+```
+
+### Example response
+
+```json
+{
+  "task": {
+    "id": "uuid",
+    "company_id": "uuid",
+    "title": "Review handbook update",
+    "description": "Follow up with legal",
+    "type": "manual",
+    "status": "pending",
+    "priority": "high",
+    "assigned_to": "auth-user-uuid",
+    "assigned_by": null,
+    "assignee_id": "org-member-uuid",
+    "section_id": null,
+    "reference_type": null,
+    "reference_id": null,
+    "due_date": "2026-04-20T00:00:00.000Z",
+    "completed_at": null,
+    "created_at": "2026-04-09T10:00:00.000Z",
+    "updated_at": "2026-04-09T10:00:00.000Z",
+    "linked_policy_id": null,
+    "linked_policy_name": null,
+    "linked_template_id": null,
+    "linked_template_name": null,
+    "linked_template_type": null
+  }
+}
+```
+
+## Update a task
+
+`PATCH /tasks/{taskId}`
+
+Required scope: `tasks.write`
+
+### Allowed fields
+
+| Field |
+|-------|
+| `title` |
+| `description` |
+| `status` |
+| `priority` |
+| `section_id` |
+| `assigned_to` |
+| `assignee_id` |
+| `due_date` |
+| `reference_type` |
+| `reference_id` |
+
+### Behavior
+
+- If `status` is set to `completed`, DocsOrb automatically sets `completed_at`.
+- If `status` changes away from `completed`, DocsOrb clears `completed_at`.
+- If no valid update fields are provided, the API returns `400 Bad Request`.
+- Tasks with `type = policy_review` cannot have their status updated through this endpoint.
+
+### Example request
+
+```bash
+curl -X PATCH "https://<your-docsorb-app-origin>/api/v1/tasks/task_uuid" \
+  -H "Authorization: Bearer <api_key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "status": "completed",
+    "priority": "low"
+  }'
+```
+
+### Example response
+
+```json
+{
+  "task": {
+    "id": "uuid",
+    "status": "completed",
+    "completed_at": "2026-04-09T10:10:00.000Z"
+  }
+}
+```
+
+## Delete a task
+
+`DELETE /tasks/{taskId}`
+
+Required scope: `tasks.delete`
+
+### Behavior
+
+- Returns `{ "success": true }` on success.
+- Returns `404 Not Found` if the task does not exist.
+- Tasks with `type = policy_review` cannot be deleted through this endpoint.
+
+### Example request
+
+```bash
+curl -X DELETE "https://<your-docsorb-app-origin>/api/v1/tasks/task_uuid" \
+  -H "Authorization: Bearer <api_key>"
+```
+
+### Example response
+
+```json
+{
+  "success": true
+}
+```
