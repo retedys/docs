@@ -18,7 +18,7 @@ Returns company members, including assigned presets and group names.
 ### Example request
 
 ```bash
-curl -X GET "https://<your-docsorb-app-origin>/api/v1/users" \
+curl -X GET "https://api.docsorb.com/api/v1/users" \
   -H "Authorization: Bearer <api_key>"
 ```
 
@@ -63,7 +63,7 @@ Creates an invitation record and returns the invitation payload and token.
 ### Example request
 
 ```bash
-curl -X POST "https://<your-docsorb-app-origin>/api/v1/users/invitations" \
+curl -X POST "https://api.docsorb.com/api/v1/users/invitations" \
   -H "Authorization: Bearer <api_key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -113,7 +113,7 @@ Supports partial updates.
 ### Example request
 
 ```bash
-curl -X PATCH "https://<your-docsorb-app-origin>/api/v1/users/member_2f7615c1-ae00-4c0e-b675-6d6a5c9578d3" \
+curl -X PATCH "https://api.docsorb.com/api/v1/users/member_2f7615c1-ae00-4c0e-b675-6d6a5c9578d3" \
   -H "Authorization: Bearer <api_key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -145,7 +145,7 @@ Removes the org member and dependent business records.
 ### Example request
 
 ```bash
-curl -X DELETE "https://<your-docsorb-app-origin>/api/v1/users/member_2f7615c1-ae00-4c0e-b675-6d6a5c9578d3" \
+curl -X DELETE "https://api.docsorb.com/api/v1/users/member_2f7615c1-ae00-4c0e-b675-6d6a5c9578d3" \
   -H "Authorization: Bearer <api_key>"
 ```
 
@@ -168,7 +168,7 @@ Returns role presets and permission definitions.
 ### Example request
 
 ```bash
-curl -X GET "https://<your-docsorb-app-origin>/api/v1/roles" \
+curl -X GET "https://api.docsorb.com/api/v1/roles" \
   -H "Authorization: Bearer <api_key>"
 ```
 
@@ -214,7 +214,7 @@ Creates a custom role preset.
 ### Example request
 
 ```bash
-curl -X POST "https://<your-docsorb-app-origin>/api/v1/roles" \
+curl -X POST "https://api.docsorb.com/api/v1/roles" \
   -H "Authorization: Bearer <api_key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -256,7 +256,7 @@ Supports partial updates. `permission_ids` replaces the full permission set.
 ### Example request
 
 ```bash
-curl -X PATCH "https://<your-docsorb-app-origin>/api/v1/roles/preset_1" \
+curl -X PATCH "https://api.docsorb.com/api/v1/roles/preset_1" \
   -H "Authorization: Bearer <api_key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -288,7 +288,7 @@ Deletes a custom non-system role preset.
 ### Example request
 
 ```bash
-curl -X DELETE "https://<your-docsorb-app-origin>/api/v1/roles/preset_1" \
+curl -X DELETE "https://api.docsorb.com/api/v1/roles/preset_1" \
   -H "Authorization: Bearer <api_key>"
 ```
 

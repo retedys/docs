@@ -7,25 +7,26 @@ The DocsOrb API is the external API for company-level integrations and automatio
 
 ## Base URL
 
-Use the base URL below and replace the host with your DocsOrb app origin:
+Use the base URL below for all DocsOrb external API requests:
 
 ```txt
-https://<your-docsorb-app-origin>/api/v1
+https://api.docsorb.com/api/v1
 ```
 
 ## What is live today
 
-Only the Tasks API is currently live on the public `/api/v1` surface.
+The public `/api/v1` surface now includes the main integration resource families.
 
 | Resource family | Status |
 |-----------------|--------|
 | Tasks | Live |
-| Policy boards | Coming soon |
-| Policies | Coming soon |
-| Policy version publishing | Coming soon |
-| Acknowledgments | Coming soon |
-| Users | Coming soon |
-| Groups | Coming soon |
+| Policy boards | Live |
+| Policies | Live |
+| Policy version publishing | Live |
+| Acknowledgments | Live |
+| Users | Live |
+| Roles | Live |
+| Groups | Live |
 
 > **Important:** Do not assume support for OAuth, webhooks, pagination, or idempotency keys. Those behaviors are not documented because they are not currently implemented.
 
@@ -66,12 +67,12 @@ Use `x-request-id` when contacting DocsOrb support.
 ## Quick example
 
 ```bash
-curl -X GET "https://<your-docsorb-app-origin>/api/v1/tasks" \
+curl -X GET "https://api.docsorb.com/api/v1/tasks" \
   -H "Authorization: Bearer <api_key>"
 ```
 
 ## Next steps
 
 - See `/api/authentication` for auth and key behavior.
-- See `/api/tasks` for the live endpoint reference.
-- See `/api/scopes` for current and reserved scopes.
+- See `/api/tasks`, `/api/policies`, and the rest of the API section for endpoint references.
+- See `/api/scopes` for the currently available scopes.

@@ -25,7 +25,7 @@ Returns policies for the calling company. The response merges base policy fields
 ### Example request
 
 ```bash
-curl -X GET "https://<your-docsorb-app-origin>/api/v1/policies?status=draft" \
+curl -X GET "https://api.docsorb.com/api/v1/policies?status=draft" \
   -H "Authorization: Bearer <api_key>"
 ```
 
@@ -93,7 +93,7 @@ Returns `201 Created`.
 ### Example request
 
 ```bash
-curl -X POST "https://<your-docsorb-app-origin>/api/v1/policies" \
+curl -X POST "https://api.docsorb.com/api/v1/policies" \
   -H "Authorization: Bearer <api_key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -166,7 +166,7 @@ If `version` is omitted, DocsOrb returns the current version.
 ### Example request
 
 ```bash
-curl -X GET "https://<your-docsorb-app-origin>/api/v1/policies/policy_97d0f0ea-bca9-429f-9ca8-bb629c3dff16?version=1.0" \
+curl -X GET "https://api.docsorb.com/api/v1/policies/policy_97d0f0ea-bca9-429f-9ca8-bb629c3dff16?version=1.0" \
   -H "Authorization: Bearer <api_key>"
 ```
 
@@ -232,7 +232,7 @@ Supports partial updates across base policy fields and current version fields.
 ### Example request
 
 ```bash
-curl -X PATCH "https://<your-docsorb-app-origin>/api/v1/policies/policy_97d0f0ea-bca9-429f-9ca8-bb629c3dff16" \
+curl -X PATCH "https://api.docsorb.com/api/v1/policies/policy_97d0f0ea-bca9-429f-9ca8-bb629c3dff16" \
   -H "Authorization: Bearer <api_key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -266,7 +266,7 @@ Soft-deletes the policy and returns a success payload.
 ### Example request
 
 ```bash
-curl -X DELETE "https://<your-docsorb-app-origin>/api/v1/policies/policy_97d0f0ea-bca9-429f-9ca8-bb629c3dff16" \
+curl -X DELETE "https://api.docsorb.com/api/v1/policies/policy_97d0f0ea-bca9-429f-9ca8-bb629c3dff16" \
   -H "Authorization: Bearer <api_key>"
 ```
 
@@ -289,7 +289,7 @@ Returns version metadata for the target policy.
 ### Example request
 
 ```bash
-curl -X GET "https://<your-docsorb-app-origin>/api/v1/policies/policy_97d0f0ea-bca9-429f-9ca8-bb629c3dff16/versions" \
+curl -X GET "https://api.docsorb.com/api/v1/policies/policy_97d0f0ea-bca9-429f-9ca8-bb629c3dff16/versions" \
   -H "Authorization: Bearer <api_key>"
 ```
 
@@ -330,7 +330,7 @@ Required scope: `policies.write`
 ### Example request
 
 ```bash
-curl -X POST "https://<your-docsorb-app-origin>/api/v1/policies/policy_97d0f0ea-bca9-429f-9ca8-bb629c3dff16/versions" \
+curl -X POST "https://api.docsorb.com/api/v1/policies/policy_97d0f0ea-bca9-429f-9ca8-bb629c3dff16/versions" \
   -H "Authorization: Bearer <api_key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -376,7 +376,7 @@ Only draft versions can be edited directly.
 ### Example request
 
 ```bash
-curl -X PATCH "https://<your-docsorb-app-origin>/api/v1/policies/policy_97d0f0ea-bca9-429f-9ca8-bb629c3dff16/versions/1.1" \
+curl -X PATCH "https://api.docsorb.com/api/v1/policies/policy_97d0f0ea-bca9-429f-9ca8-bb629c3dff16/versions/1.1" \
   -H "Authorization: Bearer <api_key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -412,7 +412,7 @@ Required scope: `policies.write`
 ### Example request
 
 ```bash
-curl -X DELETE "https://<your-docsorb-app-origin>/api/v1/policies/policy_97d0f0ea-bca9-429f-9ca8-bb629c3dff16/versions/1.1" \
+curl -X DELETE "https://api.docsorb.com/api/v1/policies/policy_97d0f0ea-bca9-429f-9ca8-bb629c3dff16/versions/1.1" \
   -H "Authorization: Bearer <api_key>"
 ```
 
@@ -435,7 +435,7 @@ Marks the target version as approved and sets it as the policy's current version
 ### Example request
 
 ```bash
-curl -X POST "https://<your-docsorb-app-origin>/api/v1/policies/policy_97d0f0ea-bca9-429f-9ca8-bb629c3dff16/versions/1.1/publish" \
+curl -X POST "https://api.docsorb.com/api/v1/policies/policy_97d0f0ea-bca9-429f-9ca8-bb629c3dff16/versions/1.1/publish" \
   -H "Authorization: Bearer <api_key>"
 ```
 

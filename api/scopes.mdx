@@ -14,26 +14,17 @@ These scopes are live today for the public external API:
 | `tasks.read` | Live | Read task data |
 | `tasks.write` | Live | Create and update tasks |
 | `tasks.delete` | Live | Delete tasks |
-
-## Reserved scopes
-
-These scopes are defined for upcoming APIs but should be treated as reserved only. They do not imply that matching external endpoints are available today.
-
-| Scope | Status |
-|-------|--------|
-| `policy_boards.read` | Reserved |
-| `policy_boards.write` | Reserved |
-| `policies.read` | Reserved |
-| `policies.write` | Reserved |
-| `policies.publish` | Reserved |
-| `acknowledgments.read` | Reserved |
-| `acknowledgments.write` | Reserved |
-| `users.read` | Reserved |
-| `users.write` | Reserved |
-| `groups.read` | Reserved |
-| `groups.write` | Reserved |
-
-> **Note:** Only the Tasks API is currently live in the public `/api/v1` surface. Policy boards, policies, acknowledgments, users, and groups should be documented as planned, not available.
+| `policy_boards.read` | Live | Read policy boards |
+| `policy_boards.write` | Live | Create, update, and delete policy boards |
+| `policies.read` | Live | Read policies and policy versions |
+| `policies.write` | Live | Create and update policies and draft versions |
+| `policies.publish` | Live | Publish policy versions |
+| `acknowledgments.read` | Live | Read acknowledgment campaigns and records |
+| `acknowledgments.write` | Live | Create, update, and archive acknowledgment campaigns |
+| `users.read` | Live | Read users and roles |
+| `users.write` | Live | Invite users and manage roles |
+| `groups.read` | Live | Read groups |
+| `groups.write` | Live | Create, update, and delete groups |
 
 ## API key presets
 

@@ -18,7 +18,7 @@ Returns only non-deleted policy boards for the calling company.
 ### Example request
 
 ```bash
-curl -X GET "https://<your-docsorb-app-origin>/api/v1/policy-boards" \
+curl -X GET "https://api.docsorb.com/api/v1/policy-boards" \
   -H "Authorization: Bearer <api_key>"
 ```
 
@@ -62,7 +62,7 @@ Returns `201 Created`.
 ### Example request
 
 ```bash
-curl -X POST "https://<your-docsorb-app-origin>/api/v1/policy-boards" \
+curl -X POST "https://api.docsorb.com/api/v1/policy-boards" \
   -H "Authorization: Bearer <api_key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -106,7 +106,7 @@ Returns a single board for the calling company, including `policy_count`.
 ### Example request
 
 ```bash
-curl -X GET "https://<your-docsorb-app-origin>/api/v1/policy-boards/board_8a58d7aa-9807-4ad7-a403-e3ef4e2ce4fb" \
+curl -X GET "https://api.docsorb.com/api/v1/policy-boards/board_8a58d7aa-9807-4ad7-a403-e3ef4e2ce4fb" \
   -H "Authorization: Bearer <api_key>"
 ```
 
@@ -149,7 +149,7 @@ Supports partial updates.
 ### Example request
 
 ```bash
-curl -X PATCH "https://<your-docsorb-app-origin>/api/v1/policy-boards/board_8a58d7aa-9807-4ad7-a403-e3ef4e2ce4fb" \
+curl -X PATCH "https://api.docsorb.com/api/v1/policy-boards/board_8a58d7aa-9807-4ad7-a403-e3ef4e2ce4fb" \
   -H "Authorization: Bearer <api_key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -185,7 +185,7 @@ Soft-deletes the board and returns a success payload.
 ### Example request
 
 ```bash
-curl -X DELETE "https://<your-docsorb-app-origin>/api/v1/policy-boards/board_8a58d7aa-9807-4ad7-a403-e3ef4e2ce4fb" \
+curl -X DELETE "https://api.docsorb.com/api/v1/policy-boards/board_8a58d7aa-9807-4ad7-a403-e3ef4e2ce4fb" \
   -H "Authorization: Bearer <api_key>"
 ```
 

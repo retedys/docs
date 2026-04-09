@@ -16,7 +16,7 @@ Returns acknowledgment campaigns for the calling company, including summary coun
 ### Example request
 
 ```bash
-curl -X GET "https://<your-docsorb-app-origin>/api/v1/acknowledgments" \
+curl -X GET "https://api.docsorb.com/api/v1/acknowledgments" \
   -H "Authorization: Bearer <api_key>"
 ```
 
@@ -67,7 +67,7 @@ Returns `201 Created`.
 ### Example request
 
 ```bash
-curl -X POST "https://<your-docsorb-app-origin>/api/v1/acknowledgments" \
+curl -X POST "https://api.docsorb.com/api/v1/acknowledgments" \
   -H "Authorization: Bearer <api_key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -137,7 +137,7 @@ Required scope: `acknowledgments.read`
 ### Example request
 
 ```bash
-curl -X GET "https://<your-docsorb-app-origin>/api/v1/acknowledgments/campaign_30fc1ef3-1f75-4731-8720-7957a52be484?period=2026-Q2" \
+curl -X GET "https://api.docsorb.com/api/v1/acknowledgments/campaign_30fc1ef3-1f75-4731-8720-7957a52be484?period=2026-Q2" \
   -H "Authorization: Bearer <api_key>"
 ```
 
@@ -190,7 +190,7 @@ Supports partial updates.
 ### Example request
 
 ```bash
-curl -X PATCH "https://<your-docsorb-app-origin>/api/v1/acknowledgments/campaign_30fc1ef3-1f75-4731-8720-7957a52be484" \
+curl -X PATCH "https://api.docsorb.com/api/v1/acknowledgments/campaign_30fc1ef3-1f75-4731-8720-7957a52be484" \
   -H "Authorization: Bearer <api_key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -222,7 +222,7 @@ Archives the campaign instead of hard-deleting it.
 ### Example request
 
 ```bash
-curl -X DELETE "https://<your-docsorb-app-origin>/api/v1/acknowledgments/campaign_30fc1ef3-1f75-4731-8720-7957a52be484" \
+curl -X DELETE "https://api.docsorb.com/api/v1/acknowledgments/campaign_30fc1ef3-1f75-4731-8720-7957a52be484" \
   -H "Authorization: Bearer <api_key>"
 ```
 
@@ -255,7 +255,7 @@ Returns paginated acknowledgment records plus pagination metadata.
 ### Example request
 
 ```bash
-curl -X GET "https://<your-docsorb-app-origin>/api/v1/acknowledgments/campaign_30fc1ef3-1f75-4731-8720-7957a52be484/records?page=1&per_page=50" \
+curl -X GET "https://api.docsorb.com/api/v1/acknowledgments/campaign_30fc1ef3-1f75-4731-8720-7957a52be484/records?page=1&per_page=50" \
   -H "Authorization: Bearer <api_key>"
 ```
 

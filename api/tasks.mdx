@@ -51,7 +51,7 @@ Returns tasks for the calling company, ordered newest first by `created_at`.
 ### Example request
 
 ```bash
-curl -X GET "https://<your-docsorb-app-origin>/api/v1/tasks?status=pending" \
+curl -X GET "https://api.docsorb.com/api/v1/tasks?status=pending" \
   -H "Authorization: Bearer <api_key>"
 ```
 
@@ -105,7 +105,7 @@ Returns a single task by ID. Returns `404` if the task is not found.
 ### Example request
 
 ```bash
-curl -X GET "https://<your-docsorb-app-origin>/api/v1/tasks/task_uuid" \
+curl -X GET "https://api.docsorb.com/api/v1/tasks/task_uuid" \
   -H "Authorization: Bearer <api_key>"
 ```
 
@@ -171,7 +171,7 @@ Returns `201 Created`.
 ### Example request
 
 ```bash
-curl -X POST "https://<your-docsorb-app-origin>/api/v1/tasks" \
+curl -X POST "https://api.docsorb.com/api/v1/tasks" \
   -H "Authorization: Bearer <api_key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -245,7 +245,7 @@ Required scope: `tasks.write`
 ### Example request
 
 ```bash
-curl -X PATCH "https://<your-docsorb-app-origin>/api/v1/tasks/task_uuid" \
+curl -X PATCH "https://api.docsorb.com/api/v1/tasks/task_uuid" \
   -H "Authorization: Bearer <api_key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -281,7 +281,7 @@ Required scope: `tasks.delete`
 ### Example request
 
 ```bash
-curl -X DELETE "https://<your-docsorb-app-origin>/api/v1/tasks/task_uuid" \
+curl -X DELETE "https://api.docsorb.com/api/v1/tasks/task_uuid" \
   -H "Authorization: Bearer <api_key>"
 ```
 

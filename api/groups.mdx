@@ -16,7 +16,7 @@ Returns groups for the calling company, including `member_count`.
 ### Example request
 
 ```bash
-curl -X GET "https://<your-docsorb-app-origin>/api/v1/groups" \
+curl -X GET "https://api.docsorb.com/api/v1/groups" \
   -H "Authorization: Bearer <api_key>"
 ```
 
@@ -54,7 +54,7 @@ Required scope: `groups.write`
 ### Example request
 
 ```bash
-curl -X POST "https://<your-docsorb-app-origin>/api/v1/groups" \
+curl -X POST "https://api.docsorb.com/api/v1/groups" \
   -H "Authorization: Bearer <api_key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -100,7 +100,7 @@ Returns the group plus `member_ids`.
 ### Example request
 
 ```bash
-curl -X GET "https://<your-docsorb-app-origin>/api/v1/groups/group_59c93452-4e60-4113-bd03-f2bce9e82542" \
+curl -X GET "https://api.docsorb.com/api/v1/groups/group_59c93452-4e60-4113-bd03-f2bce9e82542" \
   -H "Authorization: Bearer <api_key>"
 ```
 
@@ -140,7 +140,7 @@ Supports partial updates. `member_ids` replaces the full membership array.
 ### Example request
 
 ```bash
-curl -X PATCH "https://<your-docsorb-app-origin>/api/v1/groups/group_59c93452-4e60-4113-bd03-f2bce9e82542" \
+curl -X PATCH "https://api.docsorb.com/api/v1/groups/group_59c93452-4e60-4113-bd03-f2bce9e82542" \
   -H "Authorization: Bearer <api_key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -178,7 +178,7 @@ Deletes the group and its memberships.
 ### Example request
 
 ```bash
-curl -X DELETE "https://<your-docsorb-app-origin>/api/v1/groups/group_59c93452-4e60-4113-bd03-f2bce9e82542" \
+curl -X DELETE "https://api.docsorb.com/api/v1/groups/group_59c93452-4e60-4113-bd03-f2bce9e82542" \
   -H "Authorization: Bearer <api_key>"
 ```
 
